@@ -1,0 +1,26 @@
+#!/bin/sh
+
+package_path=$(pwd)
+work_path=${package_path%node_modules*githook}
+
+if [ ! -x "$(command -v git)" ]; then
+  echo 'Error: git is not exist, please install git first.'
+  exit 1
+fi
+
+if [ ! -d "${work_path}/.git" ]; then
+  echo 'Error: this directory is not a git repository, please run git init first, then run node_modules/.bin/githook.'
+  exit 1
+fi
+
+if [ -d "${work_path}/.git" ]; then
+  if [ ${package_path} == ${work_path} ]; then
+    relative_package_path=$(find . -type d -name 'githook')
+    package_path=${work_path}${relative_package_path:1}
+    cp ${package_path}/hooks/* ${work_path}/.git/hooks
+  else
+    cp ./hooks/* ${work_path}/.git/hooks
+  fi
+  exit 0
+fi
+

@@ -1,0 +1,9 @@
+{
+  "name": "githook",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "githook"
+  },
+  "bin": "./bin/copy",
+  "license": "MIT"
+}
